@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
 
     ActivityManager activityManager;
     ActivityManager.MemoryInfo memoryInfo;
-    //ActivityManager.RunningServiceInfo runningServiceInfo;
+    ActivityManager.RunningServiceInfo runningServiceInfo;
     final String TAG = "MemInfo";
 
     @Override
@@ -32,15 +32,20 @@ public class MainActivity extends ActionBarActivity {
 
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         memoryInfo = new ActivityManager.MemoryInfo();
-        //runningServiceInfo = new ActivityManager.RunningServiceInfo();
+        runningServiceInfo = new ActivityManager.RunningServiceInfo();
+
+//        Log.i(TAG, " memoryInfo.availMem " + memoryInfo.availMem);
+//        Log.i(TAG, " memoryInfo.lowMemory " + memoryInfo.lowMemory);
+//        Log.i(TAG, " memoryInfo.threshold " + memoryInfo.threshold);
 
         activityManager.getMemoryInfo(memoryInfo);
+        Log.i(TAG, "runningServiceInfo.activeSince " + runningServiceInfo.activeSince);
+        Log.i(TAG, "runningServiceInfo.clientCount " + runningServiceInfo.clientCount);
+        Log.i(TAG, "runningServiceInfo.crashCount " + runningServiceInfo.crashCount);
+        Log.i(TAG, "runningServiceInfo.foreground " + runningServiceInfo.foreground);
 
-        Log.i(TAG, " memoryInfo.availMem " + memoryInfo.availMem);
-        Log.i(TAG, " memoryInfo.lowMemory " + memoryInfo.lowMemory);
-        Log.i(TAG, " memoryInfo.threshold " + memoryInfo.threshold);
 
-        Toast.makeText(getApplicationContext(),  String.valueOf( memoryInfo.availMem), Toast.LENGTH_LONG)
+        Toast.makeText(getApplicationContext(),  String.valueOf( runningServiceInfo.activeSince ), Toast.LENGTH_LONG)
                 .show();
 
     } // end onCreate
