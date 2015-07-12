@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.os.Debug.MemoryInfo;
 import android.util.Log;
 import android.view.View;
+import android.content.Context;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     ActivityManager.MemoryInfo memoryInfo;
     ActivityManager.RunningServiceInfo runningServiceInfo;
     final String TAG = "MemInfo";
+    Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         memoryInfo = new ActivityManager.MemoryInfo();
         runningServiceInfo = new ActivityManager.RunningServiceInfo();
+        context = getApplicationContext();
 
 //        Log.i(TAG, " memoryInfo.availMem " + memoryInfo.availMem);
 //        Log.i(TAG, " memoryInfo.lowMemory " + memoryInfo.lowMemory);
@@ -53,11 +56,12 @@ public class MainActivity extends ActionBarActivity {
                 Log.i(TAG, "runningServiceInfo.clientCount " + runningServiceInfo.clientCount);
                 Log.i(TAG, "runningServiceInfo.crashCount " + runningServiceInfo.crashCount);
                 Log.i(TAG, "runningServiceInfo.foreground " + runningServiceInfo.foreground);
+                Toast.makeText(getApplicationContext(), String.valueOf(context.getPackageName()), Toast.LENGTH_LONG)
+                        .show();
             }
         });
 
-        Toast.makeText(getApplicationContext(),  String.valueOf( runningServiceInfo.activeSince ), Toast.LENGTH_LONG)
-                .show();
+
 
     } // end onCreate
 //    private  String getSystemAvaialbeMemorySize(){
