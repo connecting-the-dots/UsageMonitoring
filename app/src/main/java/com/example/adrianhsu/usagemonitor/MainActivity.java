@@ -14,8 +14,10 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
 import android.widget.Toast;
+import android.widget.Button;
 import android.os.Debug.MemoryInfo;
 import android.util.Log;
+import android.view.View;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -37,13 +39,22 @@ public class MainActivity extends ActionBarActivity {
 //        Log.i(TAG, " memoryInfo.availMem " + memoryInfo.availMem);
 //        Log.i(TAG, " memoryInfo.lowMemory " + memoryInfo.lowMemory);
 //        Log.i(TAG, " memoryInfo.threshold " + memoryInfo.threshold);
+        Button btProcessInfo ;
+        btProcessInfo =(Button)findViewById(R.id.btProcessInfo);
+        //跳转到显示进程信息界面
+        btProcessInfo.setOnClickListener(new View.OnClickListener() {
 
-        activityManager.getMemoryInfo(memoryInfo);
-        Log.i(TAG, "runningServiceInfo.activeSince " + runningServiceInfo.activeSince);
-        Log.i(TAG, "runningServiceInfo.clientCount " + runningServiceInfo.clientCount);
-        Log.i(TAG, "runningServiceInfo.crashCount " + runningServiceInfo.crashCount);
-        Log.i(TAG, "runningServiceInfo.foreground " + runningServiceInfo.foreground);
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                activityManager.getMemoryInfo(memoryInfo);
 
+                Log.i(TAG, "runningServiceInfo.activeSince " + runningServiceInfo.activeSince);
+                Log.i(TAG, "runningServiceInfo.clientCount " + runningServiceInfo.clientCount);
+                Log.i(TAG, "runningServiceInfo.crashCount " + runningServiceInfo.crashCount);
+                Log.i(TAG, "runningServiceInfo.foreground " + runningServiceInfo.foreground);
+            }
+        });
 
         Toast.makeText(getApplicationContext(),  String.valueOf( runningServiceInfo.activeSince ), Toast.LENGTH_LONG)
                 .show();
