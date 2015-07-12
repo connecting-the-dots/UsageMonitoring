@@ -8,45 +8,59 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.content.Context;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 import android.widget.Toast;
+import android.os.Debug.MemoryInfo;
 import android.util.Log;
-
 
 public class MainActivity extends ActionBarActivity {
 
-    private static final String ACTIVITY_TAG="MainActivity";
-    private static final int MAX_RUNNING = 1000;
-    private ActivityManager am;
-    private ActivityManager.RunningServiceInfo serviceInfo;
-    private List<RunningServiceInfo> runningServiceInfoList;
-    Context context;
 
-    void createRecorder() {
-
-        Log.v(Context.ACTIVITY_SERVICE, "test");
-        am = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-
-        serviceInfo = new RunningServiceInfo();
-        runningServiceInfoList = am.getRunningServices(MAX_RUNNING);
-
-        Log.v(this.ACTIVITY_TAG, "This is Verbose.");
-    }git
+    ActivityManager activityManager;
+    ActivityManager.MemoryInfo memoryInfo;
+    //ActivityManager.RunningServiceInfo runningServiceInfo;
+    final String TAG = "MemInfo";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        createRecorder();
-    }
 
+        activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        memoryInfo = new ActivityManager.MemoryInfo();
+        //runningServiceInfo = new ActivityManager.RunningServiceInfo();
+
+        activityManager.getMemoryInfo(memoryInfo);
+
+        Log.i(TAG, " memoryInfo.availMem " + memoryInfo.availMem);
+        Log.i(TAG, " memoryInfo.lowMemory " + memoryInfo.lowMemory);
+        Log.i(TAG, " memoryInfo.threshold " + memoryInfo.threshold);
+
+        Toast.makeText(getApplicationContext(),  String.valueOf( memoryInfo.availMem), Toast.LENGTH_LONG)
+                .show();
+
+    } // end onCreate
+//    private  String getSystemAvaialbeMemorySize(){
+//        //獲得MemoryInfo對象
+//        MemoryInfo memoryInfo =  new  MemoryInfo() ;
+//        //獲得系統可用內存，保存在MemoryInfo對像上
+//        mActivityManager.getMemoryInfo(memoryInfo) ;
+//        long  memSize = memoryInfo.availMem ;
+//
+//        //字符類型轉換
+//        String availMemStr = formateFileSize(memSize);
+//
+//        return  availMemStr ;
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
